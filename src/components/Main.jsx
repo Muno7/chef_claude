@@ -9,6 +9,13 @@ export default function Main() {
   )
 
   const [recipe, setRecipe] = React.useState("")
+  const recipeSection = React.useRef()
+
+  React.useEffect(() => {
+    if (recipe && recipeSection) {
+      recipeSection.current.scrollIntoView()
+    }
+  },[recipe])
 
   async function getRecipe() {
       const recipeMarkdown = await getRecipeFromMistral(ingredients)
@@ -33,6 +40,7 @@ export default function Main() {
       </form>
       {ingredients.length > 0 &&
         <IngredientsList
+          ref={recipeSection}
           ingredients={ingredients}
           getRecipe={getRecipe}
         />
